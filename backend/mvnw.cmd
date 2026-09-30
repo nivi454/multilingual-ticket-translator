@@ -76,7 +76,7 @@ IF NOT EXIST "%JAVA_EXE%" (
     EXIT /B 1
 )
 
-"%JAVA_EXE%" %MAVEN_OPTS% -jar "%WRAPPER_JAR%" %*
+"%JAVA_EXE%" %MAVEN_OPTS% "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" -classpath "%WRAPPER_JAR%" org.apache.maven.wrapper.MavenWrapperMain %*
 SET "ERROR_CODE=%ERRORLEVEL%"
 
 IF "%MAVEN_BATCH_PAUSE%"=="on" PAUSE
