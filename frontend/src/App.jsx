@@ -106,7 +106,7 @@ function App() {
   const fetchGlossary = async () => {
     setGlossaryLoading(true);
     try {
-      const res = await fetch('/api/glossary');
+      const res = await fetch(`${API_BASE_URL}/api/glossary`);
       if (res.ok) {
         const data = await res.json();
         setGlossaryTerms(data || []);
@@ -242,18 +242,10 @@ function App() {
     formData.append('targetLanguage', selectedLanguage);
 
     try {
-      let response;
-      try {
-        response = await fetch('/api/tickets/analyze', {
-          method: 'POST',
-          body: formData,
-        });
-      } catch (networkErr) {
-        response = await fetch('http://localhost:8080/api/tickets/analyze', {
-          method: 'POST',
-          body: formData,
-        });
-      }
+      const response = await fetch(`${API_BASE_URL}/api/tickets/analyze`, {
+        method: 'POST',
+        body: formData,
+      });
 
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
@@ -289,7 +281,7 @@ function App() {
     if (!window.confirm('Are you sure you want to delete this saved ticket?')) return;
 
     try {
-      const res = await fetch(`/api/tickets/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE_URL}/api/tickets/${id}`, { method: 'DELETE' });
       if (res.ok) {
         setHistoryTickets(historyTickets.filter((t) => t.id !== id));
         if (selectedHistoryModalTicket && selectedHistoryModalTicket.id === id) {
@@ -311,7 +303,7 @@ function App() {
     }
 
     try {
-      const res = await fetch('/api/glossary', {
+      const res = await fetch(`${API_BASE_URL}/api/glossary`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -340,7 +332,7 @@ function App() {
   const handleDeleteGlossaryTerm = async (id, e) => {
     if (e) e.stopPropagation();
     try {
-      const res = await fetch(`/api/glossary/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE_URL}/api/glossary/${id}`, { method: 'DELETE' });
       if (res.ok) {
         setGlossaryTerms(glossaryTerms.filter((t) => t.id !== id));
         showToast('Glossary term deleted', 'info');
