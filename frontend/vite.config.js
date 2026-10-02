@@ -9,7 +9,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'https://multilingual-ticket-translator-production.up.railway.app',
         changeOrigin: true,
         secure: false,
       },

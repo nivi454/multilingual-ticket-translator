@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import LoginPage from './components/LoginPage';
+const API_BASE_URL = 'https://multilingual-ticket-translator-production.up.railway.app';
 
 const ALLOWED_MIME_TYPES = [
   'image/jpeg',
@@ -89,7 +90,7 @@ function App() {
       const url = historySearch.trim()
         ? `/api/tickets/history?query=${encodeURIComponent(historySearch.trim())}`
         : '/api/tickets/history';
-      const res = await fetch(url);
+      const res = await fetch(`${API_BASE_URL}${url}`);
       if (res.ok) {
         const data = await res.json();
         setHistoryTickets(data.tickets || []);
